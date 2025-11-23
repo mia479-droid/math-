@@ -1,0 +1,40 @@
+import matplotlib.pyplot as plt
+
+def input_exchange_rate_for_day(day_number, currency_code):
+    """Prompts the user to input ONE exchange rate for a given day."""
+    while True:
+        try:
+            rate = float(input(f"Enter the exchange rate for {currency_code} on Day {day_number}: "))
+            return rate
+        except ValueError:
+            print("Invalid number. Please enter a valid numerical rate.")
+
+
+def plot_daily_rates(rates, currency_code):
+    """Plots a line graph showing one rate per day."""
+    if not rates:
+        print("No data to display.")
+        return
+
+    days = list(range(1, len(rates) + 1))
+    plt.figure(figsize=(10, 5))
+    plt.plot(days, rates, marker='o', linestyle='-', color='blue')
+
+    plt.title(f"Exchange Rate Over Time ({currency_code})")
+    plt.xlabel("Day Number")
+    plt.ylabel(f"Exchange Rate ({currency_code})")
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.tight_layout()
+    plt.show()
+
+
+if __name__ == "__main__":
+    currency_code = input("Enter the currency code (e.g., USD, EUR, GBP): ").upper()
+    num_days = int(input(f"How many days of {currency_code} data would you like to enter? "))
+
+    daily_rates = []
+    for day in range(1, num_days + 1):
+        rate = input_exchange_rate_for_day(day, currency_code)
+        daily_rates.append(rate)
+
+    plot_daily_rates(daily_rates, currency_code)
